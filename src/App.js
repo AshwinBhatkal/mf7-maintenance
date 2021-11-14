@@ -12,6 +12,7 @@ let bills = [];
 export default function App() {
   const [calculated, setCalculated] = React.useState(false);
   const [totalUnitsConsumed, setTotalUnitsConsumed] = React.useState(0);
+  const [unitsConsumedByFlat, setUnitsConsumedByFlat] = React.useState([]);
 
   const onCalculate = () => {
     const totalWater = document.getElementById("water").value;
@@ -31,6 +32,7 @@ export default function App() {
     });
 
     setTotalUnitsConsumed(totalUnitsConsumed);
+    setUnitsConsumedByFlat(unitsConsumedByFlat);
 
     const rate = totalWater / totalUnitsConsumed;
 
@@ -58,7 +60,10 @@ export default function App() {
           <Box>
             {flats.map((number) => (
               <>
-                <Typography variant="body1" gutterBottom>{`Flat ${number}`}</Typography>
+                <Typography
+                  variant="body1"
+                  gutterBottom
+                >{`Flat ${number}`}</Typography>
                 <Box
                   textAlign="center"
                   display="flex"
@@ -99,14 +104,20 @@ export default function App() {
                     bills.reduce((sum, curr) => sum + curr, 0)
                   )}`}
                 </Typography>
+                <Box display="flex" justifyContent="space-between" mt={2}>
+                  <Typography variant="body1">{`Flat`}</Typography>
+                  <Typography variant="body1">{`Units`}</Typography>
+                  <Typography variant="body1">{`Amount(Rs.)`}</Typography>
+                </Box>
+                <hr />
                 {bills.map((bill, index) => {
                   return (
                     <Box display="flex" justifyContent="space-between">
-                      <Typography variant="body1">{`Flat ${
+                      <Typography variant="body1">{`${index > 8 ? "" : "0"}${
                         index + 1
-                      } - `}</Typography>
-
-                      <Typography variant="body1">{`Rs. ${Math.ceil(
+                      }`}</Typography>
+                      <Typography variant="body1">{`${unitsConsumedByFlat[index]}`}</Typography>
+                      <Typography variant="body1">{`${Math.ceil(
                         bill
                       )}`}</Typography>
                     </Box>
